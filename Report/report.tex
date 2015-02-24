@@ -1,0 +1,149 @@
+
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V3.2SP) *DOES NOT* produce:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) Page numbering
+% ---------------------------------------------------------------------------------------------------------------
+
+%% A bit of setup for convenient switching between draft and production modes
+\def\draft{1}
+%% And the commands themselves
+\newcommand{\ifdraft}[0]{\ifnum\draft=1}
+\RequirePackage[final]{graphicx}
+
+\ifdraft
+\documentclass[draft,pdftex,letterpaper]{acm_proc_article-sp}
+\newcommand{\PAGENUMBERS}{yes}       % "yes" or "no"
+\else
+\documentclass[pdftex,letterpaper]{acm_proc_article-sp}
+\newcommand{\PAGENUMBERS}{no}       % "yes" or "no"
+\fi
+
+
+\usepackage{balance}  % to better equalize the last page
+\usepackage{times}    % comment if you want LaTeX's default font
+\usepackage{url}      % llt: nicely formatted URLs
+\usepackage{tabularx}
+\usepackage{float}
+%\usepackage{color}
+\usepackage{url}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{verbatim}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{amsmath}
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{xspace}
+\usepackage{multirow}
+
+
+%%%
+%%%  Comments
+%%%
+
+\usepackage[usenames,dvipsnames]{color}
+
+\ifdraft
+\newcommand{\note}[2]{
+    \textbf{\textcolor{#1}{#2}}\xspace
+}
+\else\newcommand{\note}[2]{\unskip}
+\fi
+
+\newcommand{\danh}[1]{\note{blue}{DanH: #1}}
+\newcommand{\dans}[1]{\note{red}{DanS: #1}}
+\newcommand{\magda}[1]{\note{green}{Magda: #1}}
+\newcommand{\shumo}[1]{\note{magenta}{Shumo: #1}}
+\newcommand{\revisionMeta}[1]{{\color{magenta}#1}}
+\newcommand{\revision}[1]{{\color{blue}#1}}
+
+%\newtheorem{lemma}{Lemma}[section]
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{example}{Example}[section]
+
+\declaretheorem[numberwithin=section]{definition}
+
+\newcommand{\ie}{{\em i.e.}\xspace}
+\newcommand{\eg}{{\em e.g.}\xspace}
+\newcommand{\cf}{{\em c.f.}\xspace}
+\newcommand{\ea}{{\em et al.}\xspace}
+\newcommand{\aka}{{\em a.k.a.}\xspace}
+
+\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+\newenvironment{packed_item}{
+\begin{itemize}
+   \setlength{\itemsep}{1pt}
+   \setlength{\parskip}{0pt}
+   \setlength{\parsep}{0pt}
+}
+{\end{itemize}}
+
+\newcommand\xqed[1]{%
+  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+  \quad\hbox{#1}}
+\newcommand\marker{\xqed{$\square$}}
+
+\newenvironment{packed_enum}{
+\begin{enumerate}
+   \setlength{\itemsep}{1pt}
+   \setlength{\parskip}{0pt}
+   \setlength{\parsep}{0pt}
+}
+{\end{enumerate}}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\newdef{example}{\textit{Example}}
+
+\begin{document}
+
+\title{Benchmark Big Data Systems on Complex Analytic Queries}
+
+% \numberofauthors{1}
+% \author{
+% \alignauthor
+%  author1$^\dag$, author2$^{\dag,\S}$, author3$^\dag$\\
+%        \affaddr{$^\dag$Computer Science and Engineering Department, University of Washington}\\
+%        \affaddr{Seattle, Washington, USA}\\
+%        \affaddr{$^\S$PETROBRAS S.A., Rio de Janeiro, RJ, Brazil}\\
+%        \email{\{email1, email2, email3 \}@cs.washington.edu}
+% }
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+\newpage
+
+
+\maketitle
+
+\input{abstract}
+
+%\category{H.2.4}{Database Management}{Systems}
+
+%\terms{Management, Performance}
+
+\begin{sloppypar}
+
+\input{introduction}
+
+\input{background}
+\input{conclusion}
+
+\end{sloppypar}
+
+\newpage
+
+% \scriptsize
+\bibliographystyle{abbrv}
+\bibliography{report}
+
+\end{document}
