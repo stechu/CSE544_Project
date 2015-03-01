@@ -1,2 +1,53 @@
 \section{Introduction}
 
+Following MapReduce, many big data analytics systems emerges in recent years, 
+including Spark-SparkSQL \cite{XinRZFSS13SIGMOD, ZahariaCDDMMFSS12NSDI}, 
+GraphLab \cite{GonzalezLGBG12OSDI}, Myria~\cite{HalperinACCKMORWWXBHS14SIGMOD} 
+and others \cite{AbouzeidBARS09PVLDB,ThusooSJSCZALM10ICDE}. One similarity 
+among these systems is that they all deploy in shared-nothing cluster and can 
+scale well for relatively simple queries over large data due to massive 
+parallelism. 
+
+In this paper, we ask a vital question, how do these system perform if the
+query is ``complex''. We characterize the query as complex if the query has 
+the following properties.
+
+\begin{enumerate}
+
+\item \textbf{Iterative}. This means that the query requires some
+iterative computation. Example can be like PageRank and graph reachability. 
+
+\item \textbf{Aggregation and Filtering}. Aggregation means the final
+result of the query is aggregated and contains possibly much less data
+than input. This can be think of aggregation in SQL or \texttt{reduce} on data
+by applying combining function. Data filtering means the input data needs to be
+filtered by certain predicate of conditions. Both aggregation and filtering is 
+not abnormal in data curating or ETL process.
+
+\item \textbf{Multiple data sources}. This requires the input data of the 
+the query is from more than one data source or tables. This requirement is not
+rare in practice and will require the system to handle data communication
+properly since in many cases the system need to send data between servers.
+
+\end{enumerate}
+
+We choose this criteria from two different aspects of considerations. On one
+ hand, these properties are not abnormal in analytic processes.
+  For example, to 
+get value from data, many algorithms like PageRank, K-Means require iterative
+query. Also data analysts usually will spend a large portion of time to do ETL
+or data curating, which requires the ability of aggregation and filtering. And 
+in real world applications, data can usually comes from different data 
+sources or tables and need to be combined together. On the other hand, these
+properties requires clever system design and implementation to be efficiently
+computed. And simple parallelization may not need to satisfactory 
+performance. For example, pipelining hadoop jobs to execute iterative 
+queries will suffer from Hadoop's huge cost of serialization and 
+deserialization and the cost of synchronization between jobs. From these two 
+perspective, we pick these properties to make this benchmark practical yet 
+could be helpful to design future big data systems. 
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Discussion based on experiments
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
