@@ -1,0 +1,37 @@
+\section{Experimental Evaluation}
+
+
+\subsection{Q1: LCA}
+This query is to compute the least common ancestor (LCA) of two 
+academic papers. An ancestor of paper $p$ is transitively defined as:
+
+\begin{enumerate}
+    \item Any paper that $p$ cites is an ancestor of $p$
+    \item Any paper that $p$'s ancestor cites is an ancestor of $p$
+\end{enumerate} 
+
+Given two paper $p_1$ and $p_2$, if their sets of ancestors are 
+$a(p_1)$ and $a(p_2)$, their common ancestors are 
+$a(p_1) \cap a(p_2)$. We define the distance from a common ancestor
+as $d(a_1, p_1, p_2) = max(dist(a_1, p_1), dist(a_1, p_2))$, where 
+$dist(a_1, p_1)$ is the minimum number of citation hops from $a_1$ to 
+$p_1$. Then we can define a total ordering among the common ancestors
+of $p_1$ and $p_2$ as, if $a_i, a_j \in a(p_1) \cap a(p_2)$, 
+$a_i \prec a_j$ if and only if.
+
+\begin{enumerate}
+    \item $d(a_i, p_1, p_2) < d(a_j, p_1, p_2)$.
+    \item $d(a_i, p_1, p_2) = d(a_j, p_1, p_2)$ and the year when $a_i$
+    published $year(a_i)$ is earlier than $a_j$'s $year(a_j)$.
+    \item if $d(a_i, p_1, p_2) = d(a_j, p_1, p_2)$ and $year(a_i) = year(a_j)$, $a_i$'s paper id is a smaller number than $a_j$'s.
+\end{enumerate}
+
+\subsection{Q2: K-Core}
+The query is to compute the k-core (or k-degenerate graph) of an undirected 
+graph. It is firstly defined by Paul Erd\H{o}s and Hajnal 
+as color number \cite{ErdosH66}. K-core is an important structural property
+and has been studied extensively in network analytics \cite{Alvarez-HamelinDBV05NIPS, ChengKCO11ICDE}.
+
+
+\subsection{Q3: Merger-Tree}
+
