@@ -27,11 +27,29 @@ $a_i \prec a_j$ if and only if.
 \end{enumerate}
 
 \subsection{Q2: K-Core}
-The query is to compute the k-core (or k-degenerate graph) of an undirected 
-graph. It is firstly defined by Paul Erd\H{o}s and Hajnal 
-as color number \cite{ErdosH66}. K-core is an important structural property
-and has been studied extensively in network analytics \cite{Alvarez-HamelinDBV05NIPS, ChengKCO11ICDE}.
 
+The query is to compute the $k$-core (or $k$-degenerate graph) 
+of an undirected graph. It is firstly defined by Paul Erd\H{o}s 
+and Hajnal as color number \cite{ErdosH66}. 
+$k$-core is an important structural property
+and has been studied extensively in network analytics 
+\cite{Alvarez-HamelinDBV05NIPS, ChengKCO11ICDE}.
+
+A $k$-core of a graph $G$ is a maximal induced subgraph of $G$ in which all
+vertices have degree at least $k$ in the subgraph. 
+Figure~\ref{fig:k-core_example} shows $1 \ldots 3$-cores of a graph. 
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.9\linewidth]{images/kcore.pdf}
+    \caption{Example of k-cores of a graph $G$}
+    \label{fig:k-core_example}
+\end{figure}
+
+$k$-core has two interesting properties. First, as showed in 
+Figure~\ref{fig:k-core_example}, $n$-core contains all the vertices 
+in $n+1$-core. Second, there is a polynomial time algorithm for 
+core decomposition (compute all cores).
 
 \subsection{Q3: Merger-Tree}
 
