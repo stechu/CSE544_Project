@@ -1,0 +1,4 @@
+N,instance_type,cores,time
+500,c3.2xlarge,8,460.865
+500,c3.4xlarge,16,234.708
+500,c3.8xlarge,32,139.402
