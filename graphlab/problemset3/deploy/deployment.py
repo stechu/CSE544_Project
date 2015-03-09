@@ -5,20 +5,20 @@ import select
 import subprocess
 import sys
 import re
-
+import os
 ###############################################################################
 # EC2 specific stuff
 AMI_ID = 'ami-e437a9d4'
 #AMI_ID = 'ami-6bd3985b'
 KEY_NAME = 'edwardwu'
 SEC_GROUP = 'default'
-#PL_GROUP = 'edwardwu'
-PL_GROUP = None
+PL_GROUP = 'edwardwu'
+#PL_GROUP = None
 KEY_PATH = './edwardwu.pem'
 
 conn = boto.ec2.connect_to_region('us-west-2',
-        aws_access_key_id='AKIAICRIJDCGYA6JCAOQ',
-        aws_secret_access_key='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')
+        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
 
 # Start n new instances of the specified type
 def start_instances(itype, n):
@@ -218,7 +218,7 @@ def run_benchmark(n, i_type, bench_args):
 
 #it = 'c3.8xlarge'
 it = 'm3.large'
-sizes = [1]
+sizes = [2]
 for sz in sizes:
     secs = run_benchmark(sz, it, '2200')
     print '######################',sz,',',secs
