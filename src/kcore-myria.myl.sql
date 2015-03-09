@@ -1,0 +1,15 @@
+t = scan(twitter_undirected_1m);
+cnt = [from t emit count(*)];
+
+do
+    deg = [from t emit t.$0 as u, count(*) as deg];
+    t = [from t, deg 
+         where t.$0 = deg.u and deg.deg>9 --k=10
+         emit t.$0 as u, t.$1 as v];
+    cnt_new = [from t emit count(*)];
+    update = diff(cnt, cnt_new);
+    cond = [from update emit count(*)>0];
+    cnt = cnt_new;
+while cond;
+
+store(t, ten_core_twitter1m);
