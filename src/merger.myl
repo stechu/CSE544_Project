@@ -44,4 +44,6 @@ rankedEdges = [
     emit e.nowGroup, e.currentTime,  RunningRank(e.nextGroup) as splitOrder, 
          e.currentGroup, e.nextGroup, e.sharedParticleCount];
 edges = [from rankedEdges where splitOrder = 1 emit *];
+
 store(edges, edgesTree);
+
