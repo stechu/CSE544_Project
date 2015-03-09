@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "top10_seed"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE"],
+    "columnNames" : ["seed"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/root/top_10.csv"
+  },
+  "delimiter": ","
+}

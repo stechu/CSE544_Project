@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "twitter_1m"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "LONG_TYPE"],
+    "columnNames" : ["follower", "followee"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/root/twitter_1m.csv"
+  },
+  "delimiter": ","
+}

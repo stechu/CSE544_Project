@@ -1,0 +1,30 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "halo"
+  },
+  "schema" : {
+    "columnTypes" : [
+	"LONG_TYPE",
+	"LONG_TYPE",
+	"LONG_TYPE",
+	"DOUBLE_TYPE",
+	"LONG_TYPE",
+	"DOUBLE_TYPE"
+	], 
+    "columnNames" : [
+	"nowGroup",
+	"grpID",
+	"timeStep",
+	"mass",
+	"totalParticles",
+	"HI"
+	] 
+  },
+  "source" : {
+    "dataType" : "URI",
+    "uri" : "s3n://bdbenchmark-data/halo.csv"
+  },
+ "delimiter": ","
+}

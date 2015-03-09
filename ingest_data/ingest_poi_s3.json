@@ -1,0 +1,32 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "particlesOfInterest"
+  },
+  "schema" : {
+    "columnTypes" : [
+	"LONG_TYPE",
+	"LONG_TYPE",
+	"FLOAT_TYPE",
+	"FLOAT_TYPE",
+	"STRING_TYPE",
+	"LONG_TYPE",
+	"LONG_TYPE"
+	], 
+    "columnNames" : [
+	"nowGroup",
+	"iOrder",
+	"mass",
+	"HI",
+	"type",
+	"timestep",
+	"grp"
+	] 
+  },
+  "source" : {
+    "dataType" : "URI",
+    "uri" : "s3n://bdbenchmark-data/poi.csv"
+  },
+ "delimiter": ","
+}

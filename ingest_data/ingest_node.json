@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "nodes_jstor"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "LONG_TYPE"],
+    "columnNames" : ["paper", "year"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/root/nodes_jstor.csv"
+  },
+  "delimiter": ","
+}

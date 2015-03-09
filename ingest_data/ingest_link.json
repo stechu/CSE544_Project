@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc",
+    "relationName" : "links_jstor"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "LONG_TYPE"],
+    "columnNames" : ["column1", "column2"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/root/links_jstor.csv"
+  },
+  "delimiter": ","
+}
