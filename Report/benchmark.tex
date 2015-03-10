@@ -1,4 +1,4 @@
-\section{Experimental Evaluation}
+\section{Benchmark Queries}
 
 
 \subsection{Q1: LCA}
@@ -51,7 +51,29 @@ Figure~\ref{fig:k-core_example}, $n$-core contains all the vertices
 in $n+1$-core. Second, there is a polynomial time ($O(m)$, $m$ is the 
 number of edges of the graph) algorithm for 
 core decomposition (compute all cores) \cite{BatageljM03CORR}.
+Algorithm~\ref{alg:k-core} shows the algorithm of computing $k$-core.
 
+\begin{algorithm}
+\caption{Core Decomposition Algorithm}
+\label{alg:k-core}
+\begin{algorithmic}[1]
+\Require k \Comment{k}
+\Require G \Comment{Input Graph}
+\While{true}
+    \State $count \leftarrow 0$
+    \ForAll{every vertex $v \in V(G)$}
+        \If{$deg(v) < k$}
+            \State remove $v$ from $V(G)$
+            \State remove edges adjacent to $v$ from $E(G)$
+            \State $count \leftarrow count+1$
+        \EndIf
+    \EndFor
+    \If{$count = 0$}
+        \State break.
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Q3: Merger-Tree}
 
