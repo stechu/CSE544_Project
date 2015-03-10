@@ -1,5 +1,5 @@
 --Particle Table (nowGroup, iOrder, mass, HI, type, timestep, grp)
-haloTable = [from scan(haloTable) h where h.totalParticles > 256 emit h.*];
+haloTable = [from scan(halo) h where h.totalParticles > 256 emit h.*];
 particleTable = [from scan(particlesOfInterest) pt, haloTable ht where ht.nowGroup = pt.nowGroup and ht.grpID = pt.grp and ht.timeStep = pt.timestep emit pt.*];
 edgesInit = [from particleTable pt1, particleTable pt2
         where pt1.nowGroup = pt2.nowGroup and pt1.iOrder = pt2.iOrder and 
