@@ -1,5 +1,44 @@
 \section{Methodology}
     
 \subsection{Systems that we compare}
+We choose 3 different big data systems in different categories. 
+
+\textbf{Myria.} Myria 
+\cite{HalperinACCKMORWWXBHS14SIGMOD, myriaurl} is a 
+new shared nothing parallel relational database management system (RDBMS) 
+with focus on complex workflows from science. It uses relational data model
+and embraces many modern technologies and architectural decisions which are 
+widely used in big data systems. We choose Myria as the 
+representative of state of art distributed relational big data systems.
+
+\textbf{Spark.} Spark \cite{ZahariaCDDMMFSS12NSDI} is a distributed 
+computing engine with significant
+performance improve over Hadoop MapReduce. It has an DAG execution
+engine that support cyclic data flow and in memory computing. We choose Spark 
+as the representative of state of art MapReduce like system.
+
+
+\textbf{GraphLab.} GraphLab \cite{GonzalezLGBG12OSDI} is a distributed graph 
+computation engine for real world large scale graphs. We choose GraphLab
+as the representative of state of art graph processing system.
 
 \subsection{Metrics}
+
+The advantages brought by big data system are the ability of process large 
+amount of data using high level abstraction. So we measure two metrics:
+
+\emph{Lines of code (LOC).} One advantage of modern big data systems 
+is to allow users to write high level code without worrying details of 
+data communication. Thus, we use lines of code as a measure of degree
+of abstraction of the DSL that these system uses. For fairness, we 
+define the following rules:
+\begin{enumerate}
+    \item Calling application specific libraries is not allowed. 
+    \item Each line of the program should not exceed 80 characters.
+    \item Comment does not count into LOC. 
+\end{enumerate}
+
+\emph{Runtime.} We deployed three big data system in Amazon EC2. 
+For each system,
+we use the same number (1 masters, 16 workers) and the same type (m3.large)
+of EC2 instances. The runtime does not include data loading time. 
