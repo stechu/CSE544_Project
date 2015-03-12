@@ -7,8 +7,8 @@ from pyspark import SparkContext
 import csv
 
 cites_bucket = """s3n://bdbenchmark-data/citation_jstor.csv"""
-papers_bucket = """s3n://bdbenchmark/paper_jstor.csv"""
-seed_bucket = """s3n://bdbenchmark/poi.csv"""
+papers_bucket = """s3n://bdbenchmark-data/paper_jstor.csv"""
+seed_bucket = """s3n://bdbenchmark-data/poi.csv"""
 
 
 if __name__ == "__main__":
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # distances: (vertex, (seed, distance))
     distances = seeds.map(lambda x: (x, (x, 0))).cache()
     old_count = 0L
-    new_count = seeds.count()
+    new_count = distances.count()
     # shorted path computation, only for interested vertices
     while old_count != new_count:
         next_step = distances.join(edges).map(
