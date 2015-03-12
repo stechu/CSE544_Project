@@ -6,10 +6,9 @@ import sys
 from pyspark import SparkContext
 import csv
 
-cites_bucket = """s3n://AKIAI6XU3D7NLMMQ5DMQ:\
-rT3dXyT+2U4MoYRDa1qmCnWQXrmX+czTgZMLxuPw@550.cs.washington.edu/cites.csv"""
-papers_bucket = """s3n://AKIAI6XU3D7NLMMQ5DMQ:\
-rT3dXyT+2U4MoYRDa1qmCnWQXrmX+czTgZMLxuPw@550.cs.washington.edu/papers.csv"""
+cites_bucket = """s3n://bdbenchmark-data/citation_jstor.csv"""
+papers_bucket = """s3n://bdbenchmark/paper_jstor.csv"""
+seed_bucket = """s3n://bdbenchmark/poi.csv"""
 
 
 if __name__ == "__main__":
@@ -20,22 +19,22 @@ if __name__ == "__main__":
         return s[0].isdigit() and s[1].isdigit()
 
     # convert program arguments
-    if len(sys.argv) != 4:
-        print "lca.py takes two arguments: N, savedFileName, sampling_rate"
-    N = int(sys.argv[1])
-    output_file_name = sys.argv[2]
-    sampling_rate = float(sys.argv[3])
+    if len(sys.argv) != 3:
+        print "lca.py takes two arguments: savedFileName, sampling_rate"
+    output_file_name = sys.argv[1]
+    sampling_rate = float(sys.argv[2])
 
     print "\n---------------[BEGINNING SPARK APPLICATION]-----------------\n"
 
     SparkContext.setSystemProperty('spark.executor.memory', '2500m')
     sc = SparkContext(appName="LCA_APPLICATION")
-    parallism = 19
+    parallism = 16
 
     # read data from s3
     cites = sc.textFile(cites_bucket, parallism).sample(
         False, sampling_rate, 2)
     papers = sc.textFile(papers_bucket, parallism)
+    seeds = sc.textFile(seed_bucket, parallism)
 
     # filter the annoying header
     papers = papers.map(lambda x: x.split(",")).filter(filter_header)
@@ -46,14 +45,13 @@ if __name__ == "__main__":
         lambda x: x.split(",")).filter(filter_header)
     edges = cites.map(lambda x: (int(x[0]), int(x[1]))).cache()
 
+    seeds = seeds.map(lambda x: int(x))
+
     # compute reversed shortest path
-
-    print "\n --------- "+str(N)+" valid seeds ----------\n"
-
     # distances: (vertex, (seed, distance))
-    distances = sc.parallelize(range(N)).map(lambda x: (x, (x, 0))).cache()
+    distances = seeds.map(lambda x: (x, (x, 0))).cache()
     old_count = 0L
-    new_count = N
+    new_count = seeds.count()
     # shorted path computation, only for interested vertices
     while old_count != new_count:
         next_step = distances.join(edges).map(
