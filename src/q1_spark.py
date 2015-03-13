@@ -8,7 +8,7 @@ import csv
 
 cites_bucket = """s3n://bdbenchmark-data/citation_jstor.csv"""
 papers_bucket = """s3n://bdbenchmark-data/paper_jstor.csv"""
-seed_bucket = """s3n://bdbenchmark-data/poi.csv"""
+seed_bucket = """s3n://bdbenchmark-data/top_10.csv"""
 
 
 if __name__ == "__main__":
