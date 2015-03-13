@@ -16,13 +16,17 @@ if __name__ == "__main__":
 
     degrees = twitter.map(lambda x, y: (x, 1)).reduceByKey(lambda a, b: a+b)
     remained = degrees.filter(lambda v, c: True if c >= k else False)
+    vcount = degrees.count()
+    rcount = remained.count()
 
-    while degrees.count() > remained.count():
+    while vcount > rcount:
         twitter = twitter.join(remained).map(
             lambda (v, (u, d)): (v, u)).coalesce(parallism)
         degrees = twitter.map(
             lambda x, y: (x, 1)).reduceByKey(lambda a, b: a+b)
         remained = degrees.filter(lambda v, c: True if c >= k else False)
+        vcount = degrees.count()
+        rcount = remained.count()
 
     with open("twitter_10core.csv", 'wb') as csvfile:
         writer = csv.writer(csvfile)
