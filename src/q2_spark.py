@@ -14,8 +14,8 @@ if __name__ == "__main__":
     twitter = twitter.map(lambda x: x.split(",")).map(
         lambda x: (int(x[0]), int(x[1])))
 
-    degrees = twitter.map(lambda x, y: (x, 1)).reduceByKey(lambda a, b: a+b)
-    remained = degrees.filter(lambda v, c: True if c >= k else False)
+    degrees = twitter.map(lambda (x, y): (x, 1)).reduceByKey(lambda a, b: a+b)
+    remained = degrees.filter(lambda (v, c): True if c >= k else False)
     vcount = degrees.count()
     rcount = remained.count()
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         twitter = twitter.join(remained).map(
             lambda (v, (u, d)): (v, u)).coalesce(parallism)
         degrees = twitter.map(
-            lambda x, y: (x, 1)).reduceByKey(lambda a, b: a+b)
+            lambda (x, y): (x, 1)).reduceByKey(lambda a, b: a+b)
         remained = degrees.filter(lambda v, c: True if c >= k else False)
         vcount = degrees.count()
         rcount = remained.count()
