@@ -12,7 +12,7 @@ halo_bucket = """s3n://bdbenchmark-data/halo.csv"""
 
 
 if __name__ == "__main__":
-    SparkContext.setSystemProperty('spark.executor.memory', '3500m')
+    SparkContext.setSystemProperty('spark.executor.memory', '4500m')
     sc = SparkContext(appName="MTREE_APPLICATION")
     parallism = 16
 
@@ -64,7 +64,8 @@ if __name__ == "__main__":
         edges_right = edgeAgg.map(
             lambda (a, b): ((a[0], a[1], a[3]), (a[2], b)))
         delta = edges_left.join(edges_right).map(
-            lambda (a, (b, c)): ((a[0], a[1], c[0], a[2]), c[1]))
-        iterEdges = iterEdges.union(delta)
+            lambda (a, (b, c)): ((a[0], a[1], c[0], a[2]), c[1])).coalesce(
+            parallism)
+        iterEdges = iterEdges.union(delta).coalesce(parallism)
 
     print iterEdges.count()
