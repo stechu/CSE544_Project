@@ -55,6 +55,16 @@ if __name__ == "__main__":
 
     # get max time
     maxTime = halo.map(lambda (a, b): a[2]).max()
-    print iterEdges
-    print maxTime
 
+    # compute tree edges iteratively
+    i = 1L
+    while i < maxTime:
+        edges_i = iterEdges.filter(lambda (a, b): True if a[1] == i else False)
+        edges_left = edges_i.map(lambda (a, b): ((a[0], a[1]+1, a[2]), b))
+        edges_right = edgeAgg.map(
+            lambda (a, b): ((a[0], a[1], a[3]), (a[2], b)))
+        delta = edges_left.join(edges_right).map(
+            lambda (a, (b, c)): ((a[0], a[1], c[0], a[2]), c[1]))
+        iterEdges = iterEdges.union(delta)
+
+    print iterEdges.count()
