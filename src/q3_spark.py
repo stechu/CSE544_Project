@@ -47,9 +47,14 @@ if __name__ == "__main__":
     # aggregate edges
     edgeAgg = edgeInit.reduceByKey(lambda a, b: a + b)
     # filter edges
+    # after: (nowGroup, currentTime, nextGroup, currentGroup), count
     edges = edgeAgg.filter(lambda (a, b): True if b > 256 else False)
 
-    print edges.take(1)
+    # edges in interation
+    iterEdges = edges.filter(lambda (a, b): True if a[1] == 1 else False)
 
-
+    # get max time
+    maxTime = halo.map(lambda (a, b): a[2]).max()
+    print iterEdges
+    print maxTime
 
