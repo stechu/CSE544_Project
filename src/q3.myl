@@ -1,5 +1,5 @@
 --Particle Table (nowGroup, iOrder, mass, HI, type, timestep, grp)
-haloTable = [from scan(halo) h where h.totalParticles > 256 emit h.*];
+haloTable = [from scan(haloTable) h where h.totalParticles > 256 emit h.*];
 particleTable = [from scan(particlesOfInterest) pt, haloTable ht where ht.nowGroup = pt.nowGroup and ht.grpID = pt.grp and ht.timeStep = pt.timestep emit pt.*];
 edgesInit = [from particleTable pt1, particleTable pt2
         where pt1.nowGroup = pt2.nowGroup and pt1.iOrder = pt2.iOrder and 
@@ -30,20 +30,4 @@ while [from I, maxTime where I.i < maxTime.maxT emit count(*) > 0];
 --append to previous table
 --edges = edges + scan(edgesConnected);
 store(edges, edgesConnected);
-
-apply RunningRank(haloGrp)
-{
-    [0 as _rank, -1 as _grp];
-    [case when haloGrp = _grp then _rank + 1 else 1 end, 
-     case when haloGrp = _grp then _grp else haloGrp end];
-    _rank;
-};
-
-rankedEdges = [
-    from scan(edgesConnectedSplitSort) as e 
-    emit e.nowGroup, e.currentTime,  RunningRank(e.nextGroup) as splitOrder, 
-         e.currentGroup, e.nextGroup, e.sharedParticleCount];
-edges = [from rankedEdges where splitOrder = 1 emit *];
-
-store(edges, edgesTree);
 
