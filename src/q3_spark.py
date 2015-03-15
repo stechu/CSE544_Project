@@ -22,4 +22,8 @@ if __name__ == "__main__":
         lambda x: (long(x[0]), long(x[1]), float(x[2]),
                    float(x[3]), str(x[4]), long(x[5]), long(x[6])))
 
-    print poi.take(1)
+    halo = sc.textFile(poi_bucket, parallism)
+    halo = halo.map(lambda x: x.split(",")).map(
+        lambda x: (long(x[0]), long(x[1]), long(x[2]), float(x[3]),
+                   long(x[4]), float(x[5])))
+    print halo.take(1)
