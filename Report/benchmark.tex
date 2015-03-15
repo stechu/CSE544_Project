@@ -77,3 +77,42 @@ Algorithm~\ref{alg:k-core} shows the algorithm of computing $k$-core.
 
 \subsection{Q3: Merger-Tree}
 
+The merger tree query is from large-scale cosmological simulation in astronomy.
+The astronomers want to track the evolution of galaxies from the Big Bang
+to the present day, which spans over 14 billion years. The merger tree query 
+compute the hierarchical assembly of galaxies by tracking the merging of 
+small galaxies. In our evaluation, we assume that all the preprocessing has
+been properly done and evaluate the 3rd computation step
+ in \cite{LoebmanOCOAHBQG14SIGMOD}. The query will compute weighted edges
+ (number of particles shared) between two galactic groups in two adjacent time
+ stamp ($t$ and $t+1$). Also, this query only compute the edges related to a 
+ set of particles that specified by the astronomers (Particles of interest).
+
+ \begin{figure}[t]
+ \begin{verbatim}
+ particle(pid, grp_id, time) :- 
+    poi(pid, grp_id, time), 
+    halo(grp_id, time, totalParticles>256).
+ 
+ edges(time, gid1, gid2, $count(*)) :-
+    particle(pid, gid1, time), 
+    particle(pid, gid2, time+1).
+ 
+ treeEdges(1, gid1, gid2, count) :- 
+    edges(time=1, gid1, gid2, count).
+
+ treeEdges(time+1, gid2, gid3, count) :-
+    treeEdges(time, gid1, gid2, count), 
+    edges(time+1, gid2, gid3, count). 
+ \end{verbatim}
+ \caption{Merger Tree Query}
+ \label{fig:merger-tree}
+ \end{figure}
+
+We show the datalog verison of this query in Figure~\ref{fig:merger-tree}. 
+The query firstly uses halo table to filter out all the particles that are 
+in the halo with total number of particles less or equal than $256$ 
+(those are considered as insignificant halo by the astronomers). 
+Then we computed all the edges by joining the particle particle table.
+At last we compute all the tree edges, which only consider the edges that can
+be traced ``back'' to current time. 
