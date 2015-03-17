@@ -124,9 +124,8 @@ galaxy data from UW astronomy department. We use two tables:
         \caption{Runtime without self-join}
         \label{fig:q3_runtime2}
         \end{subfigure}
-
-        \label{fig:q3}
 \caption{Q3: merger tree}
+\label{fig:q3}
 \end{figure}
 
 Figure~\ref{fig:q3} shows the runtime and lines of code using three systems. Compared to the previous 2 queries, query 3 contains a few join operations that Myria and Spark supports really well, but Graphlab doesn't have native support of. In terms of runtime performance, similar to the previous 2 queries, Myria completed first, and Spark was orders of magnitude slower. Graphlab was not evaluated in the runtime performance due to relative difficulty of implementing inner join within its GAS programming abstraction. We later performed a separate evaluation where Myria in pitched with Graphlab for the groupby and count operations. Graphlab was 2x slower probably due to its run including some input data ingestion time, while Myria's run has already preloaded all the data into the cluster. For lines of code, continuing the trend, Myria needed only $25$ lines of code, while
@@ -136,7 +135,7 @@ Spark needs $39$ lines of code and GraphLab used $187$ lines of code.
 
 
 \subsection{Comparing the three systems}
-
+\label{sec:comp}
 We try to draw some subjective conclusions for 
 the three system from the objective evaluation 
 in Section~\ref{subsec:obje} and from our experience of using these three systems in this section.
@@ -195,10 +194,10 @@ not very easy for a user to identify this problem and find the solution.
     
 \subsubsection{GraphLab}
 
-Graphlab is a high performance, distributed graph based computing framework. Compared to the other big data frameworks, graphlab differs by exploiting the locality and parallism of most graph analytics algorithms, such as pagerank and k-core. Graphlab allows users to write functional programs that will asyncroniously execute on all the vertices. They term their programming paradigm GAS (gather, apply and scatter). Gather functions are executed on all incoming edges, which serves to gather information from neighboring vertices. Apply functions merge the information collected by the gather functions and update the data in the vertex. And finally the scatter functions will scatter the new data in the vertex to its neighbors.
+Graphlab is a high performance, distributed graph based computing framework. Compared to the other big data frameworks, graphlab differs by exploiting the locality and parallelism of most graph analytics algorithms, such as PageRank and k-core. Graphlab allows users to write functional programs that will asynchronously execute on all the vertices. They term their programming paradigm GAS (gather, apply and scatter). Gather functions are executed on all incoming edges, which serves to gather information from neighboring vertices. Apply functions merge the information collected by the gather functions and update the data in the vertex. And finally the scatter functions will scatter the new data in the vertex to its neighbors.
 
-Graphlab has good performance due to being implemented in C++ and leverages all the locality and parallism that exist in most graph analytics algorithms. In some way, they have offer the similar benefits of a traditional data flow machine, where vertex program is asynchronously executed only when a neighboring vertex has gotten some new information.
+Graphlab has good performance due to being implemented in C++ and leverages all the locality and parallelism that exist in most graph analytics algorithms. In some way, they have offer the similar benefits of a traditional data flow machine, where vertex program is asynchronously executed only when a neighboring vertex has gotten some new information.
 
-However, there are 2 big problems with Graphlab. The first being the restrictiveness of its programming interface. While it is very intuitive to express graph analytic algorithms in Graphlab's GAS model, other types of complex data operations such as joining, filtering are not very straight forward to implement. Secondly, Graphlab is by far the more complex tool to use due to its complicated C++ interface, and the need to write a bunch of housekeeping code. As shown in previous sections, GraphLab requires an order of magnitude more lines of code to implement the same algorithm compared to Spark and Myria. More line of code also means the programmers are going to have a steeper learning curve and more places to make mistakes. Finally, Graphlab is also quite limited in its data ingestion modules, as it only supports loading data from local disk and HDFS. And the user has to manually partition in the input files in order for the file to be loaded parallely.
+However, there are 2 big problems with Graphlab. The first being the restrictiveness of its programming interface. While it is very intuitive to express graph analytic algorithms in Graphlab's GAS model, other types of complex data operations such as joining, filtering are not very straight forward to implement. Secondly, Graphlab is by far the more complex tool to use due to its complicated C++ interface, and the need to write a bunch of housekeeping code. As shown in previous sections, GraphLab requires an order of magnitude more lines of code to implement the same algorithm compared to Spark and Myria. More line of code also means the programmers are going to have a steeper learning curve and more places to make mistakes. Finally, Graphlab is also quite limited in its data ingestion modules, as it only supports loading data from local disk and HDFS. And the user has to manually partition in the input files in order for the file to be loaded in parallel.
 
 

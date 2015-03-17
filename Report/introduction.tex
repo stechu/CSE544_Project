@@ -47,7 +47,26 @@ deserialization and the cost of synchronization between jobs. From these two
 perspective, we pick these properties to make this benchmark practical yet 
 could be helpful to design future big data systems. 
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-Discussion based on experiments
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+We chooses three queries, least common ancestor in a citation graph, k-core
+computation and myMergerTree edge computation, which have the properties that
+we defined, to test the performance of the three big data systems. Our
+objective evaluation contains two measures, lines of code (LOC), which 
+measures how easy to write code using the programming abstraction offered by
+a system, and query runtime, which measures the efficiency of the system.
+
+We test our benchmark in three state of art big data systems. Myria, a shared
+nothing parallel relational database system, whose programming model is SQL 
+with iteration. Spark, a data flow based distributed computation engine, whose
+ programming model is MapReduce. GraphLab, a distributed graph processing and 
+machine learning engine, whose computation model is vertex based message
+passing and aggregation (mainly support Gather, Apply and Scatter operations).
+
+Our empirical evaluation shows that Myria has the fewest lines of code in all
+three queries and has the fastest runtime in two of three queries (with the 
+exception of LCA, which is 1.38x of GraphLab's runtime). Spark is comparable 
+with Myria in LOC but is slowest among the three systems among the two queries
+on which all three system successfully completed. GraphLab shows very good 
+effciency however needs the most lines of code among all systems.
+
+We also discussed our experience of using the three system in Section \ref{sec:comp}.
 
